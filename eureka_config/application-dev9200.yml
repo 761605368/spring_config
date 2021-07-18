@@ -1,0 +1,43 @@
+server:
+  port: 9200
+eureka:
+  instance:
+    lease-renewal-interval-in-seconds: 2
+    lease-expiration-duration-in-seconds: 10
+    prefer-ip-address: true
+    instance-id: eureka-consumer-user-9201
+  client:
+    service-url:
+      defaultZone: http://192.168.111.129:8761/eureka
+      2: http://192.168.111.129:8762/eureka
+      3: http://192.168.111.129:8763/eureka
+spring:
+  application:
+    name: eureka-consumer-user-2
+
+#ribbon:
+#  ReadTimeout: 6000
+#  ConnectTimeout: 1000
+
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        isolation:
+#          strategy: THREAD #控制HystrixCommand的隔离策略，THREAD->线程池隔离策略(默认)，SEMAPHORE->信号量隔离策略
+#          thread:
+#            timeoutInMilliseconds: 5000 #配置HystrixCommand执行的超时时间，执行超过该时间会进行服务降级处理
+#            interruptOnTimeout: true #配置HystrixCommand执行超时的时候是否要中断
+#            interruptOnCancel: true #配置HystrixCommand执行被取消的时候是否要中断
+#          timeout:
+#            enabled: true #配置HystrixCommand的执行是否启用超时时间
+feign:
+  hystrix:
+    enabled: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+
